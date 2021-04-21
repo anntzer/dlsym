@@ -1,11 +1,14 @@
-|GitHub|
+dlsym -- A cross-platform symbol locator
+========================================
+
+|GitHub| |PyPI|
 
 .. |GitHub|
    image:: https://img.shields.io/badge/github-anntzer%2Fdlsym-brightgreen
    :target: https://github.com/anntzer/dlsym
-
-dlsym -- A cross-platform symbol locator
-========================================
+.. |PyPI|
+   image:: https://img.shields.io/pypi/v/dlsym.svg?color=brightgreen
+   :target: https://pypi.python.org/pypi/dlsym
 
 ``dlsym`` allows Python C extension modules to use symbols present in already
 loaded C libraries, without having to actually link these libraries.  As a
