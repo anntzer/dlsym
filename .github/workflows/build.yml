@@ -17,7 +17,7 @@ jobs:
     - name: Install
       shell: bash
       run: |
-        python -mpip install --upgrade pip setuptools wheel pytest &&
+        python -mpip install --upgrade pip setuptools wheel &&
         python -mpip install . &&
         python -mpip list &&
         if [[ '${{ matrix.python-version }}' = 3.8 ]]; then
@@ -26,4 +26,4 @@ jobs:
     - name: Test
       shell: bash
       run: |
-        python -mpytest
+        python -munittest
