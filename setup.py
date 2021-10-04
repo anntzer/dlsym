@@ -1,5 +1,5 @@
 import os
-from setupext import find_namespace_packages, setup
+from setupext import find_packages, setup
 
 
 @setup.add_extensions
@@ -28,10 +28,10 @@ setup(
     ],
     cmdclass={},
     py_modules=[],
-    packages=find_namespace_packages("lib"),
+    packages=find_packages("lib"),
     package_dir={"": "lib"},
     package_data={},
-    python_requires=">=3.6",
+    python_requires=">=3.5",
     setup_requires=[
         "pybind11>=2.6.0",
         "setuptools_scm>=3.3",  # fallback_version support.

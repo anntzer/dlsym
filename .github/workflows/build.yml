@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
@@ -17,7 +17,7 @@ jobs:
     - name: Install
       shell: bash
       run: |
-        python -mpip install --upgrade pip wheel pytest &&
+        python -mpip install --upgrade pip setuptools wheel pytest &&
         python -mpip install . &&
         python -mpip list &&
         if [[ '${{ matrix.python-version }}' = 3.8 ]]; then

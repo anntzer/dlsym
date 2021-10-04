@@ -24,14 +24,13 @@ import shlex
 import subprocess
 
 import setuptools
-# find_namespace_packages itself bounds support to setuptools>=40.1.
-from setuptools import Extension, find_namespace_packages, find_packages
+from setuptools import Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from setuptools.command.develop import develop
 from setuptools.command.install_lib import install_lib
 
 
-__all__ = ["Extension", "find_namespace_packages", "find_packages", "setup"]
+__all__ = ["Extension", "find_packages", "setup"]
 
 
 class build_ext_mixin:
