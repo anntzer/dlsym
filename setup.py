@@ -20,7 +20,7 @@ setup(
     author="Antony Lee",
     author_email="",
     url="https://github.com/anntzer/dlsym",
-    license="MIT",
+    license="zlib",
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: zlib/libpng License",
