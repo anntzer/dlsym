@@ -14,7 +14,7 @@ def make_extensions():
 
 setup(
     name="dlsym",
-    description="",
+    description="A cross-platform symbol locator",
     long_description=open("README.rst", encoding="utf-8").read(),
     long_description_content_type="text/x-rst",
     author="Antony Lee",
@@ -26,11 +26,6 @@ setup(
         "License :: OSI Approved :: zlib/libpng License",
         "Programming Language :: Python :: 3",
     ],
-    cmdclass={},
-    py_modules=[],
-    packages=find_packages("lib"),
-    package_dir={"": "lib"},
-    package_data={},
     python_requires=">=3.5",
     setup_requires=[
         "pybind11>=2.6.0",
@@ -40,11 +35,5 @@ setup(
         "version_scheme": "post-release",
         "local_scheme": "node-and-date",
         "fallback_version": "0+unknown",
-    },
-    install_requires=[
-    ],
-    entry_points={
-        "console_scripts": [],
-        "gui_scripts": [],
     },
 )

@@ -26,4 +26,4 @@ jobs:
     - name: Test
       shell: bash
       run: |
-        python -munittest
+        python -munittest -v
