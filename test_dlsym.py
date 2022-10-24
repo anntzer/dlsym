@@ -34,10 +34,11 @@ class TestDlsym(TestCase):
 
     def test_blas(self):
         importorskip("numpy")
-        dasum = CFUNCTYPE(c_double, c_int, POINTER(c_double), c_int)(
-            dlsym.dlsym("cblas_dasum"))
-        buf = (c_double * 10)(*range(10))
-        assert dasum and dasum(10, buf, 1) == 45
+        dasum = CFUNCTYPE(
+            c_double, POINTER(c_int), POINTER(c_double), POINTER(c_int))(
+                dlsym.dlsym("dasum_64_"))
+        assert dasum and dasum(
+            (c_int * 1)(10), (c_double * 10)(*range(10)), (c_int * 1)(1)) == 45
 
     def test_fftw(self):
         importorskip("pyfftw")
