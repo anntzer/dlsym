@@ -1,10 +1,7 @@
 import ctypes
-from ctypes import CFUNCTYPE, POINTER, c_char_p, c_double, c_int
+from ctypes import CFUNCTYPE, POINTER, byref, c_double, c_int
 import importlib
 import math
-import os
-from pathlib import Path
-import sys
 from unittest import SkipTest, TestCase
 
 import dlsym
@@ -12,9 +9,13 @@ import dlsym
 
 def importorskip(module):
     try:
-        importlib.import_module(module)
+        return importlib.import_module(module)
     except ImportError:
         raise SkipTest("Could not import {!r}".format(module))
+
+
+c_int_p = POINTER(ctypes.c_int)
+c_double_p = POINTER(ctypes.c_double)
 
 
 class TestDlsym(TestCase):
@@ -25,24 +26,27 @@ class TestDlsym(TestCase):
         assert atan2 and atan2(1, 2) == math.atan2(1, 2)
 
     def test_tcl(self):
-        importorskip("tkinter")
-        # Python calls Tcl_FindExecutable for us.
-        getnameofexecutable = CFUNCTYPE(c_char_p)(
-            dlsym.dlsym("Tcl_GetNameOfExecutable"))
-        # On Windows, separators must be normalized.
-        assert Path(os.fsdecode(getnameofexecutable())) == Path(sys.executable)
+        tkinter = importorskip("tkinter")
+        # This test used to check Tcl_GetNameOfExecutable() == sys.executable,
+        # but on macOS one can return a path in .../Resources/Python.app/...
+        # and the other one a path outside of it.
+        get_version = CFUNCTYPE(None, c_int_p, c_int_p, c_int_p, c_int_p)(
+            dlsym.dlsym("Tcl_GetVersion"))
+        a = c_int()
+        b = c_int()
+        get_version(byref(a), byref(b), byref(c_int()), byref(c_int()))
+        assert "{}.{}".format(a.value, b.value) == str(tkinter.TclVersion)
 
     def test_blas(self):
         importorskip("numpy")
-        dasum = CFUNCTYPE(
-            c_double, POINTER(c_int), POINTER(c_double), POINTER(c_int))(
-                dlsym.dlsym("dasum_64_"))
+        dasum = CFUNCTYPE(c_double, c_int_p, c_double_p, c_int_p)(
+            dlsym.dlsym("dasum_64_"))
         assert dasum and dasum(
             (c_int * 1)(10), (c_double * 10)(*range(10)), (c_int * 1)(1)) == 45
 
     def test_fftw(self):
         importorskip("pyfftw")
-        alignment_of = CFUNCTYPE(c_int, POINTER(c_double))(
+        alignment_of = CFUNCTYPE(c_int, c_double_p)(
             dlsym.dlsym("fftw_alignment_of"))
         buf = (c_double * 10)(*range(10))
         a0 = alignment_of(buf)
