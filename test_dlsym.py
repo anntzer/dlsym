@@ -23,7 +23,8 @@ class TestDlsym(TestCase):
     def test_atan2(self):
         atan2 = CFUNCTYPE(c_double, c_double, c_double)(
             dlsym.dlsym("atan2"))
-        assert atan2 and atan2(1, 2) == math.atan2(1, 2)
+        self.assertTrue(atan2)
+        self.assertEqual(atan2(1, 2), math.atan2(1, 2))
 
     def test_tcl(self):
         tkinter = importorskip("tkinter")
@@ -35,14 +36,17 @@ class TestDlsym(TestCase):
         a = c_int()
         b = c_int()
         get_version(byref(a), byref(b), byref(c_int()), byref(c_int()))
-        assert "{}.{}".format(a.value, b.value) == str(tkinter.TclVersion)
+        self.assertEqual(f"{a.value}.{b.value}", str(tkinter.TclVersion))
 
     def test_blas(self):
         importorskip("numpy")
         dasum = CFUNCTYPE(c_double, c_int_p, c_double_p, c_int_p)(
             dlsym.dlsym("dasum_64_"))
-        assert dasum and dasum(
-            (c_int * 1)(10), (c_double * 10)(*range(10)), (c_int * 1)(1)) == 45
+        self.assertTrue(dasum)
+        self.assertEqual(
+            dasum(
+                (c_int * 1)(10), (c_double * 10)(*range(10)), (c_int * 1)(1)),
+            45)
 
     def test_fftw(self):
         importorskip("pyfftw")
@@ -53,4 +57,4 @@ class TestDlsym(TestCase):
         a1 = alignment_of(
             ctypes.cast(ctypes.addressof(buf) + ctypes.sizeof(c_double),
                         POINTER(c_double)))
-        assert (a1 - a0) % ctypes.sizeof(c_double) == 0
+        self.assertEqual((a1 - a0) % ctypes.sizeof(c_double), 0)
