@@ -1,0 +1,38 @@
+[build-system]
+requires = [
+    "setuptools>=61",
+    "setuptools_scm[toml]>=6.2",
+    "pybind11>=2.6.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dlsym"
+description = "A cross-platform symbol locator"
+readme = "README.rst"
+authors = [{name = "Antony Lee"}]
+urls = {Repository = "https://github.com/anntzer/dlsym"}
+license = {text = "zlib"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: zlib/libpng License",
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.7"
+dynamic = ["version"]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+local_scheme = "node-and-date"
+fallback_version = "0+unknown"
+
+[tool.coverage.run]
+branch = true
+source_pkgs = ["dlsym"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "error::DeprecationWarning:dlsym",
+]
