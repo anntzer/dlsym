@@ -36,7 +36,9 @@ class TestDlsym(TestCase):
         a = c_int()
         b = c_int()
         get_version(byref(a), byref(b), byref(c_int()), byref(c_int()))
-        self.assertEqual(f"{a.value}.{b.value}", str(tkinter.TclVersion))
+        # Discrepancies between the minor versions from build-time
+        # (tkinter.TclVersion) and from runtime appear possible.
+        self.assertEqual(a.value, int(tkinter.TclVersion))
 
     def test_blas(self):
         importorskip("numpy")
