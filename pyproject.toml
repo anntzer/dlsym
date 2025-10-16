@@ -12,12 +12,7 @@ description = "A cross-platform symbol locator"
 readme = "README.rst"
 authors = [{name = "Antony Lee"}]
 urls = {Repository = "https://github.com/anntzer/dlsym"}
-license = {text = "zlib"}
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: zlib/libpng License",
-    "Programming Language :: Python :: 3",
-]
+classifiers = []
 requires-python = ">=3.7"
 dynamic = ["version"]
 
